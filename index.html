@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ChatGPT-4.5 Game Dev Buddy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #e9f0ff;
+      color: #333;
+      display: flex;
+      height: 100vh;
+      box-sizing: border-box;
+    }
+    .left-panel, .right-panel {
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    textarea {
+      flex-grow: 1;
+      font-family: monospace;
+      font-size: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .right-panel {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    .chatgpt-response {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      font-style: italic;
+      color: #444;
+      min-height: 3rem;
+    }
+    .output {
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      flex-grow: 1;
+    }
+    h1 {
+      margin: 0 0 1rem 0;
+      color: #0051a3;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      font-style: italic;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="left-panel">
+    <h1>ChatGPT-4.5 Game Dev Buddy</h1>
+    <p>Ask me for game code snippets or explanations! Example: <em>“Make player movement in JavaScript”</em></p>
+    <textarea id="inputText" placeholder="Type your game dev request here..."></textarea>
+    <button onclick="handleRequest()">Get Code</button>
+  </div>
+
+  <div class="right-panel">
+    <div class="chatgpt-response" id="chatResponse">Waiting for your command...</div>
+    <pre class="output" id="output"></pre>
+  </div>
+
+  <script>
+    const gameSnippets = {
+      "player movement javascript": `// Simple player movement in JS
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowUp') console.log('Move up');
+  else if (e.key === 'ArrowDown') console.log('Move down');
+  // Add your movement logic here
+});`,
+      "car unity c#": `// Basic car controller in Unity C#
+using UnityEngine;
+public class CarController : MonoBehaviour {
+  public float speed = 10f;
+  void Update() {
+    float move = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+    transform.Translate(0, 0, move);
+  }
+}`,
+      "3d mafia game idea": `// Idea snippet for a 3D mafia game
+// - Open world map
+// - Player missions
+// - Cars & weapons
+// Use Unity or Unreal Engine for 3D development.`,
+      "enemy ai simple": `// Simple enemy AI in pseudocode
+if(player_in_range) {
+  attack_player();
+} else {
+  patrol_area();
+}`
+    };
+
+    function handleRequest() {
+      const input = document.getElementById("inputText").value.toLowerCase().trim();
+      const chatResponse = document.getElementById("chatResponse");
+      const output = document.getElementById("output");
+
+      if (!input) {
+        chatResponse.innerText = "Please type something first...";
+        output.textContent = "";
+        return;
+      }
+
+      const chatReplies = [
+        "Got it! Here's your game dev code snippet 🔥",
+        "On it! Crafting your code now... 💻",
+        "Let me flex my coding muscles for you 💪",
+        "Game dev magic incoming... ✨"
+      ];
+      chatResponse.innerText = "ChatGPT-4.5: " + chatReplies[Math.floor(Math.random() * chatReplies.length)];
+
+      let foundSnippet = null;
+      for (const key in gameSnippets) {
+        if (input.includes(key)) {
+          foundSnippet = gameSnippets[key];
+          break;
+        }
+      }
+
+      if (foundSnippet) {
+        output.textContent = foundSnippet;
+      } else {
+        output.textContent = "Sorry, I don't have a snippet for that yet. Try being more specific or ask something else!";
+      }
+    }
+  </script>
+</body>
+</html>
